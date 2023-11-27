@@ -2,39 +2,34 @@ import './Contacts.scss';
 import { ContactForm } from 'components/ContactForm';
 import { ContactsList } from 'components/ContactsList';
 import { Filter } from 'components/Filter';
-import { Loader } from 'components/Loader';
+import { useSelector } from 'react-redux';
+import { selectVisiableContacts } from 'redux/contacts/selectors';
+
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contacts/operations';
-import { selectIsLoading, selectContacts} from 'redux/contacts/selectors';
+import { useDispatch} from 'react-redux';
 
 export default function Contacts() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const contacts = useSelector(selectContacts);
+  const visibleContacts = useSelector(selectVisiableContacts);
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+   useEffect(() => {
+     dispatch(fetchContacts());
+   }, [dispatch]);
 
   return (
     <div className="contacts-container">
       <h2>Phonebook</h2>
       <ContactForm />
-      <div>{isLoading && <Loader />}</div>
       <h2>Contacts</h2>
-      {contacts.length ? (
-        <>         
+      {visibleContacts.length ? (
+        <>
           <Filter />
           <ContactsList />
         </>
       ) : (
-        <p>
-          You don't have any contacts. Add contacts to appear here.
-        </p>
+        <p>You don't have any contacts. Add contacts to appear here.</p>
       )}
     </div>
   );
 }
-
-

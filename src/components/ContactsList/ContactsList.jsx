@@ -1,31 +1,22 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteContact,
-  fetchContacts
-} from 'redux/contacts/operations';
+import { deleteContact } from 'redux/contacts/operations';
 import {
   selectIsLoading,
   selectError,
-  selectVisiableContacts,
+  selectContacts,
 } from 'redux/contacts/selectors';
 import { Loader } from 'components/Loader';
 import { toast } from 'react-toastify';
 import UpdateContactForm from 'components/UpdateContactForm/UpdateContactForm';
 
 import './ContactList.scss';
-import { useEffect } from 'react';
 
 export function ContactsList() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const visibleContacts = useSelector(selectVisiableContacts);
+  const contacts = useSelector(selectContacts);
 
   const [editingContact, setEditingContact] = useState(null);
 
@@ -45,7 +36,7 @@ export function ContactsList() {
         toast.error(`Something go wrong :(`)
       ) : (
         <ul className="list">
-          {visibleContacts.map(({ id, name, number }) => (
+          {contacts.map(({ id, name, number }) => (
             <li className="item" key={id}>
               <p>
                 {name}: {number}

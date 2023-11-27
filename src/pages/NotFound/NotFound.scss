@@ -1,0 +1,25 @@
+.not-found-container {
+  min-height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--color-light);
+}
+
+.not-found-title {
+  font-weight: 500;
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.not-found-message {
+  color: var(--color-main);
+}
+
+.not-found-link {
+  margin-top: 20px;
+  text-decoration: underline;
+  color:var(--color-accent);
+}
